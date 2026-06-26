@@ -106,26 +106,26 @@ def add_number():
     if phone:
         formatted = format_us_number(phone)
         if not formatted:
-            show_popup("Error", "Invalid phone number ❌", False)
+            show_popup("Error", "Invalid phone number ", False)
             return
         try:
             cursor.execute("INSERT INTO customers (phone) VALUES (?)", (formatted,))
             conn.commit()
-            show_popup("Added", f"{formatted} added successfully ✅", True)
+            show_popup("Added", f"{formatted} added successfully ", True)
         except sqlite3.IntegrityError:
-            show_popup("Duplicate", "Phone number already exists ⚠️", False)
+            show_popup("Duplicate", "Phone number already exists ", False)
 
 def remove_number():
     phone = simpledialog.askstring("Remove Phone", "Enter phone number:")
     if phone:
         clean = clean_phone(phone)
         if not clean:
-            show_popup("Error", "Invalid phone number ❌", False)
+            show_popup("Error", "Invalid phone number ", False)
             log_message(f"Failed to remove invalid number: {phone}")
             return
         cursor.execute("DELETE FROM customers WHERE phone=?", (clean,))
         conn.commit()
-        show_popup("Removed", f"{clean} removed ✅", True)
+        show_popup("Removed", f"{clean} removed ", True)
         log_message(f"Removed phone number: {clean}")
 
 def view_numbers():
@@ -195,7 +195,7 @@ def import_csv():
                         except sqlite3.IntegrityError:
                             pass
         conn.commit()
-        show_popup("Imported", f"{count} numbers imported ✅", True)
+        show_popup("Imported", f"{count} numbers imported ", True)
 
 def export_csv():
     file = filedialog.asksaveasfilename(defaultextension=".csv")
@@ -206,7 +206,7 @@ def export_csv():
             writer = csv.writer(f)
             for r in rows:
                 writer.writerow(r)
-        show_popup("Exported", f"{len(rows)} numbers exported ✅", True)
+        show_popup("Exported", f"{len(rows)} numbers exported ", True)
         log_message(f"Exported {len(rows)} numbers to CSV")
 
 def start_flask():
@@ -223,7 +223,7 @@ def start_flask():
         return
 
     subprocess.Popen([flask_path], cwd=folder)
-    show_popup("Server Started", "Flask server started 🚀", True)
+    show_popup("Server Started", "Flask server started ", True)
     log_message("Flask server started")
 
 def view_logs():
@@ -260,9 +260,9 @@ def send_survey():
     try:
         from app import send_survey_sms 
         send_survey_sms() 
-        show_popup("Survey Sent", "Survey sent to all numbers ✅", True)
+        show_popup("Survey Sent", "Survey sent to all numbers", True)
     except Exception as e:
-        show_popup("Error", f"Failed to send survey ❌\n{e}", False)
+        show_popup("Error", f"Failed to send survey\n{e}", False)
 
 
 #GUI Setup
@@ -294,15 +294,15 @@ button_style = {
 }
 
 buttons = [
-    ("🚀 Start Server", start_flask),
-    ("➕ Add Phone Number", add_number),
-    ("❌ Remove Phone Number", remove_number),
-    ("📋 View Numbers", view_numbers),
-    ("📥 Import CSV", import_csv),
-    ("📤 Export CSV", export_csv),
-    ("📨 Send Survey", send_survey),
-    ("📝 View Logs", view_logs),
-    ("🚪 Exit", on_exit)
+    ("Start Server", start_flask),
+    ("Add Phone Number", add_number),
+    ("Remove Phone Number", remove_number),
+    ("View Numbers", view_numbers),
+    ("Import CSV", import_csv),
+    ("Export CSV", export_csv),
+    ("Send Survey", send_survey),
+    ("View Logs", view_logs),
+    ("Exit", on_exit)
 ]
 
 for text, cmd in buttons:
