@@ -68,9 +68,9 @@ def sms_reply():
     if body.isdigit() and 1 <= int(body) <= 5:
         rating = int(body)
         if rating >= 4:
-            resp.message(f"Thanks for your great rating! ⭐⭐⭐⭐\nPlease leave a review: {REVIEW_LINK}")
+            resp.message(f"Thanks for your great rating! \nPlease leave a review: {REVIEW_LINK}")
         else:
-            resp.message("Thanks for your honesty 🙏\nWhat could we have done better?")
+            resp.message("Thanks for your honesty \nWhat could we have done better?")
             # Optional: save bad feedback to a file
             with open("bad_feedback.txt", "a") as f:
                 f.write(f"{from_number}: {body}\n")
